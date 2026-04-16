@@ -144,6 +144,16 @@ typedef struct {
     int stderr_pipe[2];
 } container_t;
 
+void supervisor_mode(const char *base_rootfs) {
+    signal(SIGCHLD, handle_sigchld);
+    signal(SIGINT, handle_shutdown);
+    signal(SIGTERM, handle_shutdown);
+    
+    while (running) {
+        //future implementation lol
+    }
+}
+
 static void usage(const char *prog)
 {
     fprintf(stderr,
