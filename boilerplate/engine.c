@@ -16,6 +16,7 @@
  */
 
 #define _GNU_SOURCE
+#define SOCKET_PATH "/tmp/engine_supervisor.sock"
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
@@ -152,6 +153,18 @@ void supervisor_mode(const char *base_rootfs) {
     while (running) {
         //future implementation lol
     }
+}
+
+void supervisor_setup_ipc() {
+    int sock = socket(AF_UNIX, SOCK_STREAM, 0);
+    struct sockaddr_un addr = {0};
+    addr.sun_family = AF_UNIX;
+    strcpy(addr.sun_path, SOCKET_PATH);
+    unlink(SOCKET_PATH);
+    bind(sock, (struct sockaddr*)&addr, sizeof(addr));
+    listen(sock, 5);
+    
+    // Accept connections in event loop
 }
 
 static void usage(const char *prog)
