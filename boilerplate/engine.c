@@ -571,6 +571,43 @@ static int cmd_stop(int argc, char *argv[])
     return send_control_request(&req);
 }
 
+int launch_container(const char *id, const char *rootfs, 
+                     const char *command, int soft_mib, int hard_mib) {
+    // Create pipes for stdout/stderr
+    pipe(container.stdout_pipe);
+    pipe(container.stderr_pipe);
+    
+    // Clone with namespaces
+    int flags = CLONE_NEWPID | CLONE_NEWUTS | CLONE_NEWNS | SIGCHLD;
+    pid_t pid = clone(container_init, stack_top, flags, &container);
+    
+    // Store metadata
+    // Register with kernel monitor (will implement in Task 4)
+    
+    return 0;
+}
+
+int container_init(void *arg) {
+    container_t *c = (container_t *)arg;
+    
+    // Mount proc
+    mount("proc", "/proc", "proc", 0, NULL);
+    
+    // Change root (chroot or pivot_root)
+    chroot(c->rootfs_path);
+    chdir("/");
+    
+    // Redirect stdout/stderr to pipes
+    dup2(c->stdout_pipe[1], STDOUT_FILENO);
+    dup2(c->stderr_pipe[1], STDERR_FILENO);
+    close(c->stdout_pipe[0]);
+    close(c->stderr_pipe[0]);
+    
+    // Execute command
+    execl("/bin/sh", "sh", "-c", command, NULL);
+    exit(1);
+}
+
 int main(int argc, char *argv[])
 {
     if (argc < 2) {
