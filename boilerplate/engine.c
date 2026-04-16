@@ -128,6 +128,22 @@ typedef struct {
     container_record_t *containers;
 } supervisor_ctx_t;
 
+typedef struct {
+    char id[64];
+    pid_t host_pid;
+    char rootfs_path[256];
+    time_t start_time;
+    char state[32];
+    int soft_limit_mib;
+    int hard_limit_mib;
+    int nice_value;
+    char log_value;
+    char log_file[256];
+    int exit_status;
+    int stdout_pipe[2];
+    int stderr_pipe[2];
+} container_t;
+
 static void usage(const char *prog)
 {
     fprintf(stderr,
