@@ -167,6 +167,37 @@ void supervisor_setup_ipc() {
     // Accept connections in event loop
 }
 
+void cli_start(int argc, char *argv[]) {
+    // Parse arguments
+    // Connect to supervisor socket
+    // Send "START|id|rootfs|command|soft|hard|nice" message
+    // Receive response
+    // Exit
+}
+
+void cli_run(int argc, char *argv[]) {
+    // Similar to start, but wait for container exit
+    // Handle SIGINT/SIGTERM to forward stop signal
+    // Return container exit status
+}
+
+void cli_ps() {
+    // Request container list from supervisor
+    // Display formatted table
+}
+
+void cli_logs(const char *id) {
+    // Request log file path from supervisor
+    // Or: read log file directly
+    // Display contents
+}
+
+void cli_stop(const char *id) {
+    // Send stop request to supervisor
+    // Supervisor sends SIGTERM to container
+    // After timeout, send SIGKILL if needed
+}
+
 static void usage(const char *prog)
 {
     fprintf(stderr,
