@@ -197,6 +197,22 @@ void cli_stop(const char *id) {
     // Supervisor sends SIGTERM to container
     // After timeout, send SIGKILL if needed
 }
+void handle_sigchld(int sig) {
+    int status;
+    pid_t pid;
+    
+    while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+        // Find container by PID
+        // Update state and exit_status
+        // Mark for cleanup
+    }
+}
+
+void handle_shutdown(int sig) {
+    // Set running = 0
+    // Send SIGTERM to all containers
+    // Wait for cleanup
+}
 
 static void usage(const char *prog)
 {
