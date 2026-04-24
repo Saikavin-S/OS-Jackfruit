@@ -32,7 +32,7 @@ sudo apt install -y build-essential linux-headers-$(uname -r)
 ### Setup
 
 ```bash
-git clone https://github.com/LOKESH-ADITHYA/OS-Jackfruit.git
+git clone https://github.com/Saikavin-S/OS-Jackfruit.git
 cd OS-Jackfruit
 
 sudo tar -xzf alpine-minirootfs-3.20.3-x86_64.tar.gz -C rootfs-base
