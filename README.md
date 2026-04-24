@@ -10,7 +10,7 @@ A lightweight Linux container runtime implemented in C with a long-running super
 | Name         | SRN           |
 | ------------ | ------------- |
 | Lokesh Adithya | PES1UG24CS392 |
-| SaiKavin S    | PES1UG24CS402 |
+| Saikavin S    | PES1UG24CS402 |
 
 ---
 
